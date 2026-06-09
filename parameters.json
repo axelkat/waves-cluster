@@ -1,0 +1,184 @@
+{
+  "database": {
+    "path": "database.db"
+  },
+
+  "FPS": 30,
+  "PX_TO_CM": 0.125,
+  "VELOCITY_SMOOTH_WINDOW": 5,
+  "Y_MIN": 100,
+  "TOTAL_PARTICLES": 80,
+
+  "clustering": {
+    "MIN_CLUSTER_SIZE": 3,
+    "MAX_GAP_FRAMES": 5,
+    "MIN_CLUSTER_RUN_FRAMES": 30,
+    "FILL_RATIO_MIN": 0.75
+  },
+
+  "accumulation_gate": {
+    "Y_BULK_LIMIT": 512,
+    "Y_CLUSTER_CONTACT": 560
+  },
+
+  "arrival": {
+    "SPATIAL_WINDOW_PX": 50,
+    "ARRIVAL_WINDOW_FRAMES": 5
+  },
+
+  "histogram": {
+    "RANGE_MIN": -18.0,
+    "RANGE_MAX": 18.0,
+    "N_BINS_ARRIVAL": 36,
+    "N_BINS_BULK": 144
+  },
+
+  "chirality": {
+    "SEGMENT_SECONDS": 1.0,
+    "CLUSTERED_PURITY": 0.8,
+    "UNCLUSTERED_PURITY": 0.2,
+    "IMMOBILE_PATH_CM": 1.0,
+    "SUBTRACT_CLUSTER_ROTATION": false,
+    "MIN_SEGS_PER_CLASS": 2,
+    "OUT_PREFIX": "chirality_",
+    "region": {
+      "VEL_MIN": 500,
+      "VEL_MAX": 1500,
+      "WIDTH_MIN": 9,
+      "WIDTH_MAX": 12,
+      "INT_VALUES": [255]
+    }
+  },
+
+  "jaccard": {
+    "SOURCE_TABLE": "DATA_OBJECT_CLASSIFIED_CORRECTED",
+    "FRAME_MAX": 1800,
+    "DT_SHORT": 30,
+    "N_LOOKAHEADS": 4,
+    "MIN_VALID_POINTS": 2,
+    "JACCARD_MIN": 0.3,
+    "VELOCITY_TOLERANCE": 0.3,
+    "OUT_TABLE": "CLUSTERS_PROPAGATING",
+    "region": {
+      "VEL_MIN": 500,
+      "VEL_MAX": 1500,
+      "WIDTH_MIN": 9,
+      "WIDTH_MAX": 12
+    }
+  },
+
+  "phase": {
+    "SOURCE_TABLE": "DATA_OBJECT_CLASSIFIED_CORRECTED",
+    "FRAME_MAX": 1800,
+    "RESTRICT_PROPAGATING": true,
+    "N_BINS_ORIENT": 36,
+    "RECLASS_ANGLE_DEG": 45,
+    "OUT_NAME_5A": "fig5a.csv",
+    "OUT_NAME_5B": "fig5b.csv",
+    "region": {
+      "VEL_MIN": 500,
+      "VEL_MAX": 1500,
+      "WIDTH_MIN": 9,
+      "WIDTH_MAX": 12
+    }
+  },
+
+  "stdev": {
+    "SOURCE_TABLE": "DATA_OBJECT_CLASSIFIED_CORRECTED",
+    "FRAME_MAX": 1800,
+    "RESTRICT_PROPAGATING": true,
+    "COUNT_MIN": 2,
+    "COUNT_MAX": 30,
+    "OUT_NAME": "count_vs_stdev_cm.csv",
+    "SAVE_PLOT": true,
+    "region": {
+      "VEL_MIN": 500,
+      "VEL_MAX": 1500,
+      "WIDTH_MIN": 9,
+      "WIDTH_MAX": 12
+    }
+  },
+
+  "accumulation": {
+    "SOURCE_TABLE": "data_object",
+    "T_SNAPSHOT_S": 70,
+    "HALF_WINDOW_FRAMES": 2,
+    "FILLER_INT": 255,
+    "OUT_NAME": "accumulation_dark_delta.csv"
+  },
+
+  "time_series": {
+    "SOURCE_TABLE": "data_object",
+    "OUT_NAME": "time_series_dark_count.csv",
+    "config_rules": [
+      {
+        "fixed": "vel",
+        "type": "static",
+        "INT_VALUES": [150, 250, 255]
+      },
+      {
+        "fixed": "width",
+        "width": 10,
+        "VEL_VALUES": [1500, 750, 500, 333]
+      },
+      {
+        "fixed": "vel",
+        "velocity": 750,
+        "WIDTH_VALUES": [7, 9, 10, 12]
+      }
+    ]
+  },
+
+  "export_1b": {
+    "SOURCE_TABLE": "data_object",
+    "BACKGROUND_TABLE": "DATA_BACKGROUND_CLASSIFIED",
+    "TARGET_VELOCITY": 750,
+    "TARGET_WIDTH": 10,
+    "INT_VALUES": [250, 255],
+    "FRAME_MAX": 1500,
+    "T_SNAPSHOT_S": 70,
+    "HALF_WINDOW_FRAMES": 2,
+    "FRAME_WIDTH_PX": 640,
+    "N_BINS_X": 64,
+    "OUT_NAME": "fig1b.csv"
+  },
+
+  "eval_orient": {
+    "SOURCE_TABLE": "DATA_OBJECT_CLASSIFIED_CORRECTED",
+    "CLASSIFICATION": "FRONT",
+    "ORIENTATION_COLUMN": "fixed_arrow",
+    "N_BINS": 18,
+    "RANGE_MIN": 0.0,
+    "RANGE_MAX": 360.0,
+    "OUT_NAME": "orientation_front_interface.csv",
+    "SAVE_PLOTS": true,
+    "region": {
+      "VEL_MIN": 1,
+      "VEL_MAX": 100000,
+      "WIDTH_MIN": 0,
+      "WIDTH_MAX": 100
+    }
+  },
+
+  "arrow": {
+    "SOURCE_TABLE": "DATA_OBJECT_CLASSIFIED_CORRECTED",
+    "ORIENTATION_COLUMN": "fixed_arrow",
+    "FRAME_MAX": 1800,
+    "MIN_CLUSTER_SIZE": 3,
+    "RESTRICT_PROPAGATING": false,
+    "N_BINS": 36,
+    "RANGE_MIN": 0.0,
+    "RANGE_MAX": 360.0,
+    "OUT_NAME": "arrow_distro_clustered_front.csv",
+    "region": {
+      "VEL_MIN": 500,
+      "VEL_MAX": 1500,
+      "WIDTH_MIN": 9,
+      "WIDTH_MAX": 12
+    }
+  },
+
+  "output": {
+    "DIR": "../data/"
+  }
+}
